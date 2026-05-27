@@ -1,0 +1,136 @@
+/* Global Dark Mode Overrides */
+body {
+    background-color: var(--dark) !important;
+    color: #cbd5e1 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #f8fafc !important;
+}
+
+/* Override Bootstrap Backgrounds */
+.bg-white, .bg-light {
+    background-color: var(--light) !important;
+    color: #cbd5e1 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: none !important;
+}
+
+.text-dark {
+    color: #f8fafc !important;
+}
+
+.text-body {
+    color: #cbd5e1 !important;
+}
+
+.text-muted {
+    color: #94a3b8 !important;
+}
+
+/* Ensure text inside overridden cards is readable */
+.bg-white *, .bg-light * {
+    /* Inherit allows specific element colors to apply, but we ensure text doesn't turn dark */
+}
+
+.bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4, .bg-white h5, .bg-white h6,
+.bg-light h1, .bg-light h2, .bg-light h3, .bg-light h4, .bg-light h5, .bg-light h6 {
+    color: #f8fafc !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    background-color: var(--dark) !important;
+    border: 1px solid #334155 !important;
+    color: #f8fafc !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--dark) !important;
+    color: #f8fafc !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25) !important;
+}
+
+.form-floating > label {
+    color: #94a3b8 !important;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: #cbd5e1 !important;
+    background-color: transparent !important;
+}
+
+/* Links and Primary Text */
+.text-primary {
+    color: var(--primary) !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Navbar specific */
+.navbar.bg-white, .navbar-light {
+    background-color: var(--dark) !important;
+    border-bottom: 1px solid #1e293b;
+    box-shadow: none !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #cbd5e1 !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: var(--primary) !important;
+}
+
+.navbar-brand h2 {
+    color: #f8fafc !important;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    background-color: var(--light) !important;
+    border: 1px solid #334155;
+}
+
+.dropdown-item {
+    color: #cbd5e1 !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+/* Miscellaneous Overrides */
+.section-title.bg-white {
+    background-color: transparent !important;
+}
+
+/* Course Categories Overlay */
+.category .position-absolute {
+    background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+/* Team & Testimonial specific fixes */
+.team-item.bg-light, .testimonial-text.bg-light {
+    background-color: var(--light) !important;
+}
+
+/* Breadcrumb */
+.breadcrumb.bg-light {
+    background-color: var(--light) !important;
+}
+
+/* Testimonial gradients */
+.testimonial-carousel::before {
+    background: linear-gradient(to right, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%) !important;
+}
+
+.testimonial-carousel::after {
+    background: linear-gradient(to left, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%) !important;
+}
