@@ -1,12 +1,12 @@
-# Project Synopsis: eLEARNING (Mindova) Platform
+# Project Synopsis: LearnSphere Platform
 
 ## 1. Project Title
-**eLEARNING (Mindova) Platform**
+**LearnSphere Platform**
 
 ---
 
 ## 2. Project Overview (2–5 lines)
-The **eLEARNING (Mindova) Platform** is an interactive, responsive online learning management system designed to provide students and administrators with a seamless educational portal. It supports course enrollment, lecture progress tracking, module video player, dynamic quiz evaluations, and printable certificates of completion. Built using the **MERN Stack** (MongoDB, Express, React, Node.js), it includes a mock authentication fallback to bypass Auth0 requirements, allowing full offline workspace execution.
+The **LearnSphere Platform** is an interactive, responsive online learning management system designed to provide students and administrators with a seamless educational portal. It supports course enrollment, lecture progress tracking, module video player, dynamic quiz evaluations, and printable certificates of completion. Built using the **MERN Stack** (MongoDB, Express, React, Node.js), it includes a mock authentication fallback to bypass Auth0 requirements, allowing full offline workspace execution.
 
 ---
 

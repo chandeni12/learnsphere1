@@ -289,11 +289,12 @@ export default function Profile() {
           <div className="d-flex align-items-center gap-2">
             <Link to="/" style={{ textDecoration: "none" }} className="d-flex align-items-center gap-2">
               <i className="fa fa-book-open text-primary" style={{ fontSize: "20px" }}></i>
-              <span className="logo-glow fs-4">Mindova</span>
+              <span className="logo-glow fs-4">LearnSphere</span>
             </Link>
           </div>
 
           <div className="d-flex align-items-center gap-3">
+            <Link to="/" className="text-decoration-none text-light font-weight-bold" style={{ fontSize: "14px" }}>Home</Link>
             <Link to="/courses" className="text-decoration-none text-light font-weight-bold" style={{ fontSize: "14px" }}>Courses</Link>
             <span className="role-badge">STUDENT</span>
             <div className="avatar-circle">

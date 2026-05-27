@@ -126,7 +126,7 @@ export default function Certificate() {
                 fontWeight: "bold",
                 color: "#1e3a8a"
               }}>
-                Mindova Academy
+                LearnSphere Academy
               </div>
               <div className="text-muted mt-2" style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px" }}>Authorized Sign</div>
             </div>

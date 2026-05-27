@@ -27,9 +27,9 @@ export default function About() {
                 </h6>
                 <div style={{ width: "80px", height: "2px", backgroundColor: "#3b82f6", marginLeft: "15px" }}></div>
               </div>
-              <h1 className="mb-4 text-white" style={{ fontWeight: "700" }}>Welcome to eLEARNING</h1>
+              <h1 className="mb-4 text-white" style={{ fontWeight: "700" }}>Welcome to LearnSphere</h1>
               <p className="mb-4" style={{ color: "#94a3b8", fontSize: "15px", lineHeight: "1.6" }}>
-                Welcome to our eLearning platform, where education meets
+                Welcome to our LearnSphere platform, where education meets
                 innovation. With our interactive courses, experienced
                 instructors, and cutting-edge technology, learning has never
                 been more engaging or accessible.
