@@ -5,17 +5,55 @@ import Footer from './Footer'
 
 export default function Sign() {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const role = (email.toLowerCase() === 'admin' || email.toLowerCase() === 'admin@gmail.com') ? 'admin' : 'student';
+        setError("");
+
+        const storedUsersStr = localStorage.getItem('users_db');
+        let usersDb = storedUsersStr ? JSON.parse(storedUsersStr) : [
+            { name: "admin", email: "admin@gmail.com", phone: "9999999999", password: "admin123", role: "admin" },
+            { name: "Dr. Chandeni", email: "instructor@gmail.com", phone: "9030465611", password: "instructor123", role: "instructor" },
+            { name: "ankitha", email: "ankitha@gmail.com", phone: "8888888888", password: "ankitha123", role: "student" }
+        ];
+
+        let searchEmail = email.toLowerCase();
+        if (searchEmail === 'admin') searchEmail = 'admin@gmail.com';
+        if (searchEmail === 'instructor') searchEmail = 'instructor@gmail.com';
+        if (searchEmail === 'ankitha') searchEmail = 'ankitha@gmail.com';
+
+        // Find the user by email
+        const user = usersDb.find(u => u.email.toLowerCase() === searchEmail);
+
+        if (!user) {
+            setError("Invalid email address!");
+            return;
+        }
+
+        // Validate password
+        if (user.password !== password) {
+            setError("Incorrect password!");
+            return;
+        }
+
+        // Successful authentication
         const userObj = {
-            name: role === 'admin' ? 'admin' : 'ankitha',
-            email: email,
-            role: role
+            name: user.name,
+            email: user.email,
+            role: user.role
         };
         localStorage.setItem('user', JSON.stringify(userObj));
-        window.location.href = role === 'admin' ? '/admin' : '/profile';
+
+        // Redirect based on role
+        if (user.role === 'admin') {
+            window.location.href = '/admin';
+        } else if (user.role === 'instructor') {
+            window.location.href = '/instructor';
+        } else {
+            window.location.href = '/profile';
+        }
     };
 
     return (
@@ -32,6 +70,11 @@ export default function Sign() {
                                     <h2 className="mb-2">Welcome Back!</h2>
                                     <p className="text-muted">Sign in to access your courses and progress</p>
                                 </div>
+                                {error && (
+                                    <div className="alert alert-danger border-0 text-white mb-4" style={{ backgroundColor: "#ef4444", borderRadius: "10px" }} role="alert">
+                                        <i className="fa fa-exclamation-circle me-2"></i> {error}
+                                    </div>
+                                )}
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-4">
                                         <label htmlFor="exampleInputEmail1" className="form-label fw-bold" style={{ fontSize: "14px", color: "#555" }}>
@@ -49,7 +92,7 @@ export default function Sign() {
                                             required 
                                         />
                                         <div id="emailHelp" className="form-text mt-2 text-muted" style={{ fontSize: "12px" }}>
-                                            Use <b>admin@gmail.com</b> for Admin dashboard or <b>ankitha@gmail.com</b> for Student dashboard.
+                                            Use <b>admin@gmail.com</b> for Admin, <b>instructor@gmail.com</b> for Instructor, or <b>ankitha@gmail.com</b> for Student dashboard.
                                         </div>
                                     </div>
                                     <div className="mb-4">
@@ -64,6 +107,8 @@ export default function Sign() {
                                             className="form-control py-3" 
                                             id="exampleInputPassword1" 
                                             placeholder="••••••••" 
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             style={{ borderRadius: "10px", borderColor: "#ddd", fontSize: "14px" }} 
                                             required 
                                         />

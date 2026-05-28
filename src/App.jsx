@@ -37,6 +37,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Feedback from "./Components/Pages/Feedback";
 import FeedbackAll from "./Components/Pages/FeedbackAll";
 import AdminDashboard from "./Components/Pages/AdminDashboard";
+import InstructorDashboard from "./Components/Pages/InstructorDashboard";
 import Certificate from "./Components/Pages/Certificate";
 import AiQuiz from "./Components/Quiz/AiQuiz";
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/register" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/instructor" element={<InstructorDashboard />} />
           <Route path="/certificate" element={<Certificate />} />
 
           <Route path="/test" element={<Test />} />

@@ -6,6 +6,60 @@ export default function Showresult(props) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
+        const localUserStr = localStorage.getItem('user');
+        if (!localUserStr) return;
+
+        const user = JSON.parse(localUserStr);
+        if (user.role !== 'student') return;
+
+        const coursesKey = `courses_state_${user.email}`;
+        const userCoursesStr = localStorage.getItem(coursesKey);
+        if (!userCoursesStr) return;
+
+        const courses = JSON.parse(userCoursesStr);
+        const percentage = Math.round((props.result / props.total) * 100);
+        const passed = percentage >= 50;
+
+        let matched = false;
+        const updatedCourses = courses.map(c => {
+            let isMatch = false;
+            // Check direct route/ID matching
+            if (c.quizRoute === window.location.pathname || c.id === props.path || c.videoRoute === props.path) {
+                isMatch = true;
+            }
+            // Check topic mapping
+            else if (props.topic === "AI" && c.title.toUpperCase() === "AI") {
+                isMatch = true;
+            }
+            else if (props.topic === "Full Stack" && c.title.toUpperCase() === "WEB DEVELOPMENT") {
+                isMatch = true;
+            }
+            else if ((props.topic === "JavaScript" || props.topic === "SQL") && c.title.toUpperCase() === "SQL") {
+                isMatch = true;
+            }
+            // Fallback matching by title search
+            else if (props.topic && c.title.toLowerCase().includes(props.topic.toLowerCase())) {
+                isMatch = true;
+            }
+
+            if (isMatch && c.examStatus === "booked") {
+                matched = true;
+                return {
+                    ...c,
+                    examStatus: passed ? "passed" : "failed",
+                    examScore: percentage
+                };
+            }
+            return c;
+        });
+
+        if (matched) {
+            localStorage.setItem(coursesKey, JSON.stringify(updatedCourses));
+            window.dispatchEvent(new Event('storage'));
+        }
+    }, [props.result, props.total, props.path, props.topic]);
+
+    useEffect(() => {
         setTimeout(() => {
             setVisible(true);
         }, 3000);

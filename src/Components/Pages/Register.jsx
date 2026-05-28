@@ -9,6 +9,7 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
+    const [role, setRole] = useState('student');
     const [error, setError] = useState('');
 
     const handleSubmit = (e) => {
@@ -21,17 +22,53 @@ export default function Register() {
 
         setError("");
         
-        // Save user state locally
-        const userObj = {
+        const storedUsersStr = localStorage.getItem('users_db');
+        let usersDb = storedUsersStr ? JSON.parse(storedUsersStr) : [
+            { name: "admin", email: "admin@gmail.com", phone: "9999999999", password: "admin123", role: "admin" },
+            { name: "Dr. Chandeni", email: "instructor@gmail.com", phone: "9030465611", password: "instructor123", role: "instructor" },
+            { name: "ankitha", email: "ankitha@gmail.com", phone: "8888888888", password: "ankitha123", role: "student" }
+        ];
+
+        // Check if email already exists
+        if (usersDb.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+            setError("Email is already registered!");
+            return;
+        }
+
+        // Single admin constraint
+        if (role === 'admin') {
+            const hasAdmin = usersDb.some(u => u.role === 'admin');
+            if (hasAdmin) {
+                setError("An administrator account is already registered! Only one admin is allowed.");
+                return;
+            }
+        }
+
+        const newUser = {
             name: name,
             email: email,
             phone: phone,
-            role: "student"
+            password: password1,
+            role: role
         };
-        localStorage.setItem('user', JSON.stringify(userObj));
+        usersDb.push(newUser);
+        localStorage.setItem('users_db', JSON.stringify(usersDb));
+
+        // Save active user session
+        localStorage.setItem('user', JSON.stringify({
+            name: name,
+            email: email,
+            role: role
+        }));
         
-        // Redirect to student dashboard
-        window.location.href = '/profile';
+        // Redirect based on role
+        if (role === 'admin') {
+            window.location.href = '/admin';
+        } else if (role === 'instructor') {
+            window.location.href = '/instructor';
+        } else {
+            window.location.href = '/profile';
+        }
     };
 
     return (
@@ -105,6 +142,24 @@ export default function Register() {
                                             style={{ borderRadius: "10px", borderColor: "#ddd", fontSize: "14px" }} 
                                             required 
                                         />
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="roleSelect" className="form-label fw-bold" style={{ fontSize: "14px", color: "#555" }}>
+                                            <i className="fa fa-user-shield text-primary me-2" />Select Role
+                                        </label>
+                                        <select 
+                                            id="roleSelect"
+                                            className="form-select py-3" 
+                                            value={role}
+                                            onChange={(e) => setRole(e.target.value)}
+                                            style={{ borderRadius: "10px", borderColor: "#ddd", fontSize: "14px", appearance: "auto" }} 
+                                            required
+                                        >
+                                            <option value="student">Student</option>
+                                            <option value="instructor">Instructor</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
                                     </div>
 
                                     <div className="row">

@@ -22,16 +22,24 @@ The **LearnSphere Platform** is an interactive, responsive online learning manag
 - **Course Enrollment Cards**: Interactive cards that display active badges ("Enrolled" or "Awaiting Approval" lock status) and buttons to view content or download completion certificates.
 - **Floating Actions**: Quick-access Call support (orange action button) and Support chat (blue action button) anchored on the bottom right.
 
-### C. Administrative Control Panel
-- **Stat Analytics Cards**: Displays total system counts (Total Users, Total Courses, active Students, and Instructors).
-- **Interactive Requests Table**: Enables administrative approval (`Approve` / `Reject`) of pending student course enrollments in real time.
-- **Progress Report Table**: Displays student information, number of enrolled courses, certificates issued, and average completion percentage with a functional print-to-PDF button.
+### C. Administrative Control Panel (Admin Controls)
+- **Account & System Analytics**: Tracks and visualizes system-wide metrics including total registered users, courses, active students, and instructors.
+- **Enrollment Access Requests**: An interactive request management panel where administrators approve or reject course enrollment applications in real time, dynamically updating student states.
+- **Student Progress Reports**: A comprehensive directory mapping student emails, enrolled courses counts, issued certificates, and overall progress, complete with a functional landscape print-to-PDF button.
 
-### D. Printable Certificate Generation Engine
-- **Verification Engine**: Unlocks a print-ready certificate link immediately when a student reaches 100% video completion on any enrolled course.
+### D. Instructor Control Portal (Instructor Controls)
+- **Course Management Module**: Enables instructors to build and publish courses with categories (e.g., Web Dev, AI, Database, Programming), titles, durations, descriptions, and mock thumbnails.
+- **Lecture Video Publisher**: Supports uploading lecture videos (direct MP4 urls) and study resources (PDF links) mapped to specific course modules.
+- **Quiz Assessment Builder**: Allows instructors to create custom Multiple Choice Question (MCQ) assessments, complete with 4 options, correct answer keys, and timers.
+- **Student Progress Tracker**: Shows a live table of students enrolled in the instructor's courses, showing their current completion progress and enrollment statuses.
+- **Profile Self-Management**: Provides editable fields for instructor name, academic skills, teaching experience, email, and social GitHub links.
+
+### E. Printable Certificate Generation Engine
+- **Module Overview**: The certificate generation module provides downloadable course completion certificates after students successfully complete learning modules and quizzes. The system automatically generates certificates with student and course details, ensuring achievement recognition and easy access.
+- **Verification Engine**: Unlocks a print-ready certificate link after the student completes video lectures, books an exam slot, completes the online quiz assessment, and passes with a score >= 50%.
 - **Customized Printing Layout**: Extracts URL query arguments (`name`, `course`, `date`) and maps them to a classic double-bordered certificate layout, using `@media print` style sheets to strip buttons and format the frame automatically.
 
-### E. Interactive Assessment Module (Quizzes)
+### F. Interactive Assessment Module (Quizzes)
 - **Dark-Theme Quiz Interface**: Sleek dark card layout displaying questions and options with rounded choice indicators.
 - **Radio Selection Evaluation**: Circular radio input elements that highlight selected answers and calculate final assessment scores.
 - **Custom Topic Handlers**: Displays matching headers based on the active test route (e.g., Java Quiz, JavaScript Quiz, AI Quiz, React JS Quiz).

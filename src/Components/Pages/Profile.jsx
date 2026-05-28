@@ -14,6 +14,7 @@ export default function Profile() {
   const [totalEnrollments, setTotalEnrollments] = useState(3);
   const [completedCount, setCompletedCount] = useState(0);
   const [overallProgress, setOverallProgress] = useState(0);
+  const [bookingStates, setBookingStates] = useState({});
 
   // Simulated daily study streak (Mon-Sun)
   const streakDays = [
@@ -46,7 +47,11 @@ export default function Profile() {
           videoRoute: "/courses/mern/react",
           quizRoute: "/test/ai",
           watchedVideos: ["mock_video_1"],
-          totalVideos: 1
+          totalVideos: 1,
+          examStatus: "none",
+          examSlotDate: "",
+          examSlotTime: "",
+          examScore: null
         },
         {
           id: "/courses/fullstack",
@@ -58,7 +63,11 @@ export default function Profile() {
           videoRoute: "/courses/fullstack",
           quizRoute: "/test/fullstack",
           watchedVideos: ["mock_video_2"],
-          totalVideos: 1
+          totalVideos: 1,
+          examStatus: "none",
+          examSlotDate: "",
+          examSlotTime: "",
+          examScore: null
         },
         {
           id: "/courses/fullstack/sql",
@@ -70,7 +79,11 @@ export default function Profile() {
           videoRoute: "/courses/fullstack/sql",
           quizRoute: "/test/javascript",
           watchedVideos: [],
-          totalVideos: 1
+          totalVideos: 1,
+          examStatus: "none",
+          examSlotDate: "",
+          examSlotTime: "",
+          examScore: null
         }
       ];
       localStorage.setItem(coursesKey, JSON.stringify(defaultCourses));
@@ -105,6 +118,74 @@ export default function Profile() {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [user]);
+
+  const updateBookingState = (courseId, key, value) => {
+    setBookingStates(prev => ({
+      ...prev,
+      [courseId]: {
+        ...prev[courseId],
+        [key]: value
+      }
+    }));
+  };
+
+  const handleApplyExam = (courseId) => {
+    const email = user.email;
+    const coursesKey = `courses_state_${email}`;
+    const updated = courses.map(c => {
+      if (c.id === courseId) {
+        return { ...c, examStatus: "applied" };
+      }
+      return c;
+    });
+    localStorage.setItem(coursesKey, JSON.stringify(updated));
+    setCourses(updated);
+    window.dispatchEvent(new Event('storage'));
+  };
+
+  const handleBookSlot = (courseId) => {
+    const booking = bookingStates[courseId];
+    if (!booking || !booking.date || !booking.time) {
+      alert("Please select both a date and time slot!");
+      return;
+    }
+    const email = user.email;
+    const coursesKey = `courses_state_${email}`;
+    const updated = courses.map(c => {
+      if (c.id === courseId) {
+        return {
+          ...c,
+          examStatus: "booked",
+          examSlotDate: booking.date,
+          examSlotTime: booking.time
+        };
+      }
+      return c;
+    });
+    localStorage.setItem(coursesKey, JSON.stringify(updated));
+    setCourses(updated);
+    window.dispatchEvent(new Event('storage'));
+  };
+
+  const handleReapplyExam = (courseId) => {
+    const email = user.email;
+    const coursesKey = `courses_state_${email}`;
+    const updated = courses.map(c => {
+      if (c.id === courseId) {
+        return {
+          ...c,
+          examStatus: "applied",
+          examSlotDate: "",
+          examSlotTime: "",
+          examScore: null
+        };
+      }
+      return c;
+    });
+    localStorage.setItem(coursesKey, JSON.stringify(updated));
+    setCourses(updated);
+    window.dispatchEvent(new Event('storage'));
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -457,13 +538,154 @@ export default function Profile() {
                             <button className="btn btn-outline-secondary w-100 py-2 border-dashed" disabled style={{ fontSize: "13px", fontWeight: "600" }}>
                               <i className="fa fa-lock me-2"></i>Awaiting Approval
                             </button>
+                          ) : course.progress === 100 ? (
+                            /* Integrated Exam & Certificate Workflow when course is fully watched */
+                            <div className="w-100 d-flex flex-column gap-3 mt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "15px" }}>
+                              
+                              {/* STAGE 1: NOT APPLIED */}
+                              {(!course.examStatus || course.examStatus === "none") && (
+                                <div>
+                                  <p className="text-success mb-2" style={{ fontSize: "12px", fontWeight: "600" }}>
+                                    <i className="fa fa-check-circle me-1"></i> Course Completed!
+                                  </p>
+                                  <p className="text-muted mb-3" style={{ fontSize: "11px" }}>
+                                    Please apply for the final online exam to qualify for your certificate.
+                                  </p>
+                                  <button 
+                                    className="btn btn-primary w-100 py-2" 
+                                    style={{ borderRadius: "8px", fontWeight: "600", fontSize: "13px" }}
+                                    onClick={() => handleApplyExam(course.id)}
+                                  >
+                                    Apply for Exam
+                                  </button>
+                                </div>
+                              )}
+
+                              {/* STAGE 2: APPLIED - NEED TO BOOK SLOT */}
+                              {course.examStatus === "applied" && (
+                                <div>
+                                  <p className="text-warning mb-2" style={{ fontSize: "12px", fontWeight: "600" }}>
+                                    <i className="fa fa-calendar-alt me-1"></i> Exam Applied
+                                  </p>
+                                  <p className="text-muted mb-3" style={{ fontSize: "11px" }}>
+                                    Book your date and time slot to attend the online assessment:
+                                  </p>
+                                  
+                                  <div className="mb-2 text-start">
+                                    <label className="form-label text-muted mb-1" style={{ fontSize: "10px", textTransform: "uppercase" }}>Select Date</label>
+                                    <input 
+                                      type="date" 
+                                      className="form-control py-2 form-control-dark" 
+                                      style={{ fontSize: "12px", backgroundColor: "#111827", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "6px" }}
+                                      min={new Date().toISOString().split('T')[0]}
+                                      value={bookingStates[course.id]?.date || ""}
+                                      onChange={(e) => updateBookingState(course.id, "date", e.target.value)}
+                                      required
+                                    />
+                                  </div>
+                                  <div className="mb-3 text-start">
+                                    <label className="form-label text-muted mb-1" style={{ fontSize: "10px", textTransform: "uppercase" }}>Select Time Slot</label>
+                                    <select 
+                                      className="form-select py-2 form-control-dark" 
+                                      style={{ fontSize: "12px", backgroundColor: "#111827", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "6px" }}
+                                      value={bookingStates[course.id]?.time || ""}
+                                      onChange={(e) => updateBookingState(course.id, "time", e.target.value)}
+                                      required
+                                    >
+                                      <option value="">-- Choose Time --</option>
+                                      <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                                      <option value="11:30 AM - 12:30 PM">11:30 AM - 12:30 PM</option>
+                                      <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                                      <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
+                                    </select>
+                                  </div>
+                                  
+                                  <button 
+                                    className="btn btn-warning text-dark w-100 py-2" 
+                                    style={{ borderRadius: "8px", fontWeight: "700", fontSize: "13px" }}
+                                    onClick={() => handleBookSlot(course.id)}
+                                  >
+                                    Confirm Slot Booking
+                                  </button>
+                                </div>
+                              )}
+
+                              {/* STAGE 3: BOOKED - ATTEND EXAM */}
+                              {course.examStatus === "booked" && (
+                                <div>
+                                  <p className="text-info mb-1" style={{ fontSize: "12px", fontWeight: "600" }}>
+                                    <i className="fa fa-clock me-1"></i> Exam Booked!
+                                  </p>
+                                  <div className="p-2 rounded mb-3 text-start" style={{ backgroundColor: "rgba(56, 189, 248, 0.08)", border: "1px solid rgba(56, 189, 248, 0.2)" }}>
+                                    <div style={{ fontSize: "11px", color: "#38bdf8" }}>
+                                      <b>Date:</b> {course.examSlotDate}
+                                    </div>
+                                    <div style={{ fontSize: "11px", color: "#38bdf8" }}>
+                                      <b>Time:</b> {course.examSlotTime}
+                                    </div>
+                                  </div>
+                                  <Link 
+                                    to={course.quizRoute || "/test"} 
+                                    className="btn btn-info text-white w-100 py-2 d-block text-center" 
+                                    style={{ borderRadius: "8px", fontWeight: "600", fontSize: "13px", textDecoration: "none", backgroundColor: "#06b6d4", borderColor: "#06b6d4" }}
+                                  >
+                                    <i className="fa fa-pencil-alt me-2"></i>Attend Online Exam
+                                  </Link>
+                                </div>
+                              )}
+
+                              {/* STAGE 4: EXAM PASSED */}
+                              {course.examStatus === "passed" && (
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <span className="text-success" style={{ fontSize: "12px", fontWeight: "600" }}>
+                                      <i className="fa fa-check-circle me-1"></i> Exam Passed!
+                                    </span>
+                                    <span className="badge bg-success text-white" style={{ fontSize: "10px" }}>Score: {course.examScore}%</span>
+                                  </div>
+                                  <p className="text-muted mb-3" style={{ fontSize: "11px" }}>
+                                    Congratulations! Your completion certificate is unlocked and verified.
+                                  </p>
+                                  <Link 
+                                    to={`/certificate?name=${user.name}&course=${course.title}`}
+                                    className="btn btn-success text-white w-100 py-2 d-block text-center" 
+                                    style={{ borderRadius: "8px", fontWeight: "600", fontSize: "13px", textDecoration: "none", backgroundColor: "#10b981", borderColor: "#10b981" }}
+                                  >
+                                    <i className="fa fa-certificate me-2"></i>Download Certificate
+                                  </Link>
+                                </div>
+                              )}
+
+                              {/* STAGE 5: EXAM FAILED */}
+                              {course.examStatus === "failed" && (
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <span className="text-danger" style={{ fontSize: "12px", fontWeight: "600" }}>
+                                      <i className="fa fa-times-circle me-1"></i> Exam Failed
+                                    </span>
+                                    <span className="badge bg-danger text-white" style={{ fontSize: "10px" }}>Score: {course.examScore}%</span>
+                                  </div>
+                                  <p className="text-muted mb-3" style={{ fontSize: "11px" }}>
+                                    Passing score is 50%. Please review course material and re-try the assessment.
+                                  </p>
+                                  <button 
+                                    className="btn btn-outline-danger w-100 py-2" 
+                                    style={{ borderRadius: "8px", fontWeight: "600", fontSize: "13px" }}
+                                    onClick={() => handleReapplyExam(course.id)}
+                                  >
+                                    Re-Apply for Exam
+                                  </button>
+                                </div>
+                              )}
+
+                            </div>
                           ) : (
+                            /* Normal Learning Actions when course is not 100% finished */
                             <>
                               <Link to={course.videoRoute} className="btn btn-continue flex-grow-1 text-center text-white py-2" style={{ textDecoration: "none" }}>
                                 <i className="fa fa-play me-2"></i>Continue Learning
                               </Link>
                               
-                              {/* Direct Quiz Route shortcut */}
                               <Link 
                                 to={course.quizRoute || "/test"} 
                                 className="btn-icon-action" 
@@ -472,19 +694,11 @@ export default function Profile() {
                                 <i className="fa fa-question-circle"></i>
                               </Link>
 
-                              {/* Certificate Download shortcut */}
                               <Link 
-                                to={course.progress === 100 ? `/certificate?name=${user.name}&course=${course.title}` : "#"} 
-                                className={`btn-icon-action ${course.progress !== 100 ? "disabled" : ""}`}
-                                style={course.progress === 100 ? { 
-                                  backgroundColor: "rgba(139, 92, 246, 0.15)",
-                                  color: "#c084fc",
-                                  borderColor: "rgba(139, 92, 246, 0.4)" 
-                                } : {}}
-                                title={course.progress === 100 ? "View Certificate" : "Certificate Locked"}
-                                onClick={(e) => {
-                                  if (course.progress !== 100) e.preventDefault();
-                                }}
+                                to={course.progress === 100 && course.examStatus === "passed" ? `/certificate?name=${user.name}&course=${course.title}` : "#"} 
+                                className="btn-icon-action disabled"
+                                title="Certificate Locked"
+                                onClick={(e) => e.preventDefault()}
                               >
                                 <i className="fa fa-certificate"></i>
                               </Link>

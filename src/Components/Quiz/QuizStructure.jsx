@@ -64,7 +64,7 @@ export default function QuizStructure({ Questions, path }) {
                             boxShadow: "0 10px 30px rgba(0,0,0,0.15)"
                         }}>
                             {isLast ? (
-                                <Showresult result={result} total={Questions.length} tryAgain={resetAll} path={path} />
+                                <Showresult result={result} total={Questions.length} tryAgain={resetAll} path={path} topic={topic} />
                             ) : (
                                 <>
                                     <div className="mb-4">

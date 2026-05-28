@@ -10,7 +10,7 @@ export default function Footer() {
       >
         <div className="container py-5">
           <div className="row g-5">
-            <div className="col-lg-3 col-md-6">
+            <div className="col-lg-4 col-md-6">
               <h4 className="text-white mb-3">Quick Link</h4>
               <Link className="btn btn-link" to="/about">
                 About Us
@@ -25,7 +25,7 @@ export default function Footer() {
                 Terms &amp; Condition
               </Link>
             </div>
-            <div className="col-lg-3 col-md-6">
+            <div className="col-lg-4 col-md-6">
               <h4 className="text-white mb-3">Contact</h4>
               <p className="mb-2">
                 <i className="fa fa-map-marker-alt me-3" />
@@ -42,33 +42,15 @@ export default function Footer() {
               <div className="d-flex pt-2">
                 <a
                   className="btn btn-outline-light btn-social"
-                  href="#"
-                >
-                  <i className="fab fa-youtube" />
-                </a>
-                <a
-                  className="btn btn-outline-light btn-social"
-                  href="#"
-                >
-                  <i className="fab fa-facebook-f" />
-                </a>
-                <a
-                  className="btn btn-outline-light btn-social"
                   href="https://github.com/chandeni12"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className="fab fa-github" />
                 </a>
-                <a
-                  className="btn btn-outline-light btn-social"
-                  href="#"
-                >
-                  <i className="fab fa-linkedin-in" />
-                </a>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6">
+            <div className="col-lg-4 col-md-6">
               <h4 className="text-white mb-3">Gallery</h4>
               <div className="row g-2 pt-2">
                 <div className="col-4">
@@ -114,9 +96,6 @@ export default function Footer() {
                   />
                 </div>
               </div>
-            </div>
-            <div className="col-lg-3 col-md-6">
-              <h4 className="text-white mb-3">Newsletter</h4>
             </div>
           </div>
         </div>

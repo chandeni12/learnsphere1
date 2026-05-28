@@ -116,11 +116,21 @@ export default function Navbar() {
 
           {isAuthenticated && (
             <NavLink
-              to={user && user.role === 'admin' ? "/admin" : "/profile"}
+              to={
+                user && user.role === 'admin'
+                  ? "/admin"
+                  : user && user.role === 'instructor'
+                  ? "/instructor"
+                  : "/profile"
+              }
               className="nav-item nav-link"
               activeClassName="active"
             >
-              {user && user.role === 'admin' ? "Admin Dashboard" : user.name}
+              {user && user.role === 'admin'
+                ? "Admin Dashboard"
+                : user && user.role === 'instructor'
+                ? "Instructor Dashboard"
+                : user.name}
             </NavLink>
           )}
           {isAuthenticated ? (
