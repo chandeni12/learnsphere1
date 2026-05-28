@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -11,62 +12,57 @@ export default function Footer() {
           <div className="row g-5">
             <div className="col-lg-3 col-md-6">
               <h4 className="text-white mb-3">Quick Link</h4>
-              <a className="btn btn-link" href>
+              <Link className="btn btn-link" to="/about">
                 About Us
-              </a>
-              <a className="btn btn-link" href>
+              </Link>
+              <a className="btn btn-link" href="mailto:chandeni134@gmail.com">
                 Contact Us
               </a>
-              <a className="btn btn-link" href>
+              <Link className="btn btn-link" to="/testimonial">
                 Privacy Policy
-              </a>
-              <a className="btn btn-link" href>
+              </Link>
+              <Link className="btn btn-link" to="/contact">
                 Terms &amp; Condition
-              </a>
-              <a className="btn btn-link" href>
-                FAQs &amp; Help
-              </a>
+              </Link>
             </div>
             <div className="col-lg-3 col-md-6">
               <h4 className="text-white mb-3">Contact</h4>
               <p className="mb-2">
                 <i className="fa fa-map-marker-alt me-3" />
-                Chennai, Tamil Nadu, India
+                Madikeri, Karnataka, India
               </p>
               <p className="mb-2">
                 <i className="fa fa-phone-alt me-3" />
-                +091 705 088 9705
+                <a href="tel:9030465611" className="text-light text-decoration-none">+91 90304 65611</a>
               </p>
               <p className="mb-2">
                 <i className="fa fa-envelope me-3" />
-                basantgoswami7050@gmail.com
+                <a href="mailto:chandeni134@gmail.com" className="text-light text-decoration-none">chandeni134@gmail.com</a>
               </p>
               <div className="d-flex pt-2">
                 <a
                   className="btn btn-outline-light btn-social"
-                  href="https://www.youtube.com/channel/UCESPlHcn45qCQe9YiH43MRw"
-                  target="_blank"
+                  href="#"
                 >
                   <i className="fab fa-youtube" />
                 </a>
                 <a
                   className="btn btn-outline-light btn-social"
-                  href="https://www.facebook.com/basant.bharati.54/"
-                  target="_blank"
+                  href="#"
                 >
                   <i className="fab fa-facebook-f" />
                 </a>
                 <a
                   className="btn btn-outline-light btn-social"
-                  href="https://github.com/Basant-goswami"
+                  href="https://github.com/chandeni12"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <i className="fab fa-github" />
                 </a>
                 <a
                   className="btn btn-outline-light btn-social"
-                  href="https://www.linkedin.com/in/basant-kumar-bharati"
-                  target="_blank"
+                  href="#"
                 >
                   <i className="fab fa-linkedin-in" />
                 </a>
@@ -121,26 +117,6 @@ export default function Footer() {
             </div>
             <div className="col-lg-3 col-md-6">
               <h4 className="text-white mb-3">Newsletter</h4>
-              <p>
-                This website is a Final Year project of IT Department DSCET,
-                Chennai.
-              </p>
-              <div
-                className="position-relative mx-auto"
-                style={{ maxWidth: "400px" }}
-              >
-                <input
-                  className="form-control border-0 w-100 py-3 ps-4 pe-5"
-                  type="text"
-                  placeholder="Your email"
-                />
-                <button
-                  type="button"
-                  className="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
-                >
-                  SignUp
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -153,13 +129,7 @@ export default function Footer() {
                   LearnSphere
                 </a>
                 , All Right Reserved. Designed By{" "}
-                <a
-                  className="border-bottom"
-                  href="https://www.linkedin.com/in/basant-kumar-bharati"
-                  target="_blank"
-                >
-                  DSCET IT Dept final year student
-                </a>
+                <span className="text-white">Department of MCA Final Year</span>
                 <br />
                 <br />
               </div>

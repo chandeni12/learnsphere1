@@ -12,13 +12,37 @@ export default function Contact() {
                     <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <h5>Get In Touch</h5>
                         <p className="mb-4">Feel free to reach out to us for any queries or support. We are here to help you.</p>
+                        
+                        {/* Address */}
                         <div className="d-flex align-items-center mb-3">
                             <div className="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style={{width: '50px', height: '50px'}}>
                                 <i className="fa fa-map-marker-alt text-white"></i>
                             </div>
                             <div className="ms-3">
                                 <h5 className="text-primary">Office</h5>
-                                <p className="mb-0">123 Street, New York, USA</p>
+                                <p className="mb-0 text-white">Madikeri, Karnataka, India</p>
+                            </div>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="d-flex align-items-center mb-3">
+                            <div className="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style={{width: '50px', height: '50px'}}>
+                                <i className="fa fa-phone text-white"></i>
+                            </div>
+                            <div className="ms-3">
+                                <h5 className="text-primary">Mobile</h5>
+                                <p className="mb-0"><a href="tel:9030465611" className="text-white text-decoration-none">+91 90304 65611</a></p>
+                            </div>
+                        </div>
+
+                        {/* Email */}
+                        <div className="d-flex align-items-center mb-3">
+                            <div className="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style={{width: '50px', height: '50px'}}>
+                                <i className="fa fa-envelope text-white"></i>
+                            </div>
+                            <div className="ms-3">
+                                <h5 className="text-primary">Email</h5>
+                                <p className="mb-0"><a href="mailto:chandeni134@gmail.com" className="text-white text-decoration-none">chandeni134@gmail.com</a></p>
                             </div>
                         </div>
                     </div>
@@ -26,7 +50,7 @@ export default function Contact() {
                         {/* Placeholder for map or something else */}
                     </div>
                     <div className="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                        <form>
+                        <form action="mailto:chandeni134@gmail.com" method="POST" encType="text/plain">
                             <div className="row g-3">
                                 <div className="col-md-6">
                                     <div className="form-floating">
