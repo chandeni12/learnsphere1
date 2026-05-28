@@ -9,7 +9,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 export default function FeedbackAll() {
   const [value, setValue] = React.useState(2);
   const [feedbackData, setFeedbackData] = useState([]);
-  let url = "https://elearning-backend-lfxb.onrender.com/feedback";
+  let url = "https://learnsphere-backend-whhs.onrender.com/feedback";
 
   useEffect(() => {
     let fetchData = async () => {
@@ -46,7 +46,7 @@ export default function FeedbackAll() {
         <div className="row mt-4 wow fadeInUp" data-wow-delay="0.3s">
           <h1 className="text-center">Give your Feedback</h1>
           <form
-            action="https://elearning-backend-lfxb.onrender.com/feedback/new"
+            action="https://learnsphere-backend-whhs.onrender.com/feedback/new"
             method="post"
             className="col-md-6 offset-md-3 mb-4 wow fadeInUp"
           >
@@ -118,7 +118,7 @@ export default function FeedbackAll() {
             data-wow-delay="0.3s"
           >
             <a
-              href={`https://elearning-backend-lfxb.onrender.com/feedback/${feedback._id}`}
+              href={`https://learnsphere-backend-whhs.onrender.com/feedback/${feedback._id}`}
             >
               <span
                 class="material-symbols-outlined position-absolute top-0 end-0"
