@@ -7,7 +7,7 @@ const cors = require("cors");
 app.use(cors());
 require("dotenv").config();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 // let MongoURL = "mongodb://127.0.0.1:27017/eLearning";
 
 let MongoURL = process.env.DB_URL;
