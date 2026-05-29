@@ -3,7 +3,9 @@
 }
 .slide img{
     width: 100%;
-    min-height: 60vh;
+    height: 380px;
+    object-fit: cover;
+    object-position: center;
 }
 .carousel-control-prev{
     left: -4%;
