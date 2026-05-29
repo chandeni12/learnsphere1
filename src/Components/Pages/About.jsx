@@ -14,7 +14,7 @@ export default function About() {
               <div className="position-relative h-100">
                 <img
                   className="img-fluid w-100 h-100"
-                  src="/img/about.jpg"
+                  src="/img/about.png"
                   alt="about jpg"
                   style={{ objectFit: "cover", borderRadius: "8px", border: "1px solid #1e293b" }}
                 />
